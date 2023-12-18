@@ -7,6 +7,26 @@ function App() {
   const [sortDirection, setSortDirection] = useState('asc');
   const [sortKey, setSortKey] = useState(null);
   const [filter, setFilter] = useState('');
+  const [show, setShow] = useState({
+    id: false,
+    name: false,
+    lastSeen:false,
+    order:false,
+    totalSpend: false,
+    latestPurchase: false,
+    news: false,
+    segment: false,
+  });
+
+
+  const handleShowSearch = (key) => {
+    setShow((prevShowSearch) => ({
+      ...Object.keys(prevShowSearch).reduce((acc, column) => {
+        acc[column] = column === key ? !prevShowSearch[column] : false;
+        return acc;
+      }, {}),
+    }));
+  }
 
 
 
@@ -20,9 +40,9 @@ function App() {
   };
 
 
-  // const handleFilterChange = (e) => {
-  //   setFilter(e.target.value);
-  // };
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
 
   const filteredData = data.filter((item) =>
     Object.values(item).some((value) =>
@@ -58,28 +78,37 @@ function App() {
               <tr>
                 <th className='d-flex' scope='col' onClick={() => handleSort('id')}>
                   ID
-                  <i className="bi bi-arrow-down " ></i>
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('id')}></i>
+                  {show.id && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
                 <th scope='col' onClick={() => handleSort('name')}>Name
-                  <i className="bi bi-arrow-down " ></i>
+
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('name')}></i>
+                  {show.name && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
                 <th scope='col' onClick={() => handleSort('lastSeen')}>Last Seen
-                  <i className="bi bi-arrow-down " ></i>
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('lastSeen')}></i>
+                  {show.lastSeen && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
                 <th scope='col' onClick={() => handleSort('order')}>Order
-                  <i className="bi bi-arrow-down " ></i>
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('order')}></i>
+                  {show.order && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
                 <th scope='col' onClick={() => handleSort('totalSpend')}>Total Spend
-                  <i className="bi bi-arrow-down " ></i>
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('totalSpend')}></i>
+                  {show.totalSpend && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
                 <th scope='col' onClick={() => handleSort('latestPurchase')}>Latest Purchase
-                  <i className="bi bi-arrow-down " ></i>
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('latestPurchase')}></i>
+                  {show.latestPurchase && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
                 <th scope='col' onClick={() => handleSort('news')}>News
-                  <i className="bi bi-arrow-down " ></i>
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('news')}></i>
+                  {show.news && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
                 <th scope='col' onClick={() => handleSort('segment')}>Segment
-                  <i className="bi bi-arrow-down " ></i>
+                  <i className="bi bi-search ms-2" onClick={() => handleShowSearch('segment')}></i>
+                  {show.segment && <input type="text" className='input-group' onChange={handleFilterChange} value={filter} />}
                 </th>
               </tr>
             </thead>
